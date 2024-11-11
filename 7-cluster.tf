@@ -2,7 +2,7 @@
 
 resource "google_container_cluster" "primary" {
   name                     = "primary"
-  location                 = "us-central1-a"
+  location                 = "${var.region}-a"
   remove_default_node_pool = true
   initial_node_count       = 1
   network                  = google_compute_network.main.self_link
@@ -13,12 +13,12 @@ resource "google_container_cluster" "primary" {
 
   # Optional, if you want multi-zonal cluster
   node_locations = [
-    "us-central1-b"
+    "${var.region}-b"
   ]
 
   addons_config {
     http_load_balancing {
-      disabled = true
+      disabled = false
     }
     horizontal_pod_autoscaling {
       disabled = false
